@@ -32,7 +32,7 @@ type V1Time struct {
 	// Represents seconds of UTC time since Unix epoch
 	// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
 	// 9999-12-31T23:59:59Z inclusive.
-	Seconds string `json:"seconds,omitempty"`
+	Seconds int64 `json:"seconds,omitempty"`
 }
 
 // Validate validates this v1 time

@@ -35,7 +35,7 @@ type V1alpha1ApplicationStatus struct {
 	OperationState *V1alpha1OperationState `json:"operationState,omitempty"`
 
 	// reconciled at
-	ReconciledAt *V1Time `json:"reconciledAt,omitempty"`
+	ReconciledAt string `json:"reconciledAt,omitempty"`
 
 	// ResourceHealthSource indicates where the resource health status is stored: inline if not set or appTree
 	ResourceHealthSource string `json:"resourceHealthSource,omitempty"`
@@ -74,10 +74,6 @@ func (m *V1alpha1ApplicationStatus) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateOperationState(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateReconciledAt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -208,25 +204,6 @@ func (m *V1alpha1ApplicationStatus) validateOperationState(formats strfmt.Regist
 	return nil
 }
 
-func (m *V1alpha1ApplicationStatus) validateReconciledAt(formats strfmt.Registry) error {
-	if swag.IsZero(m.ReconciledAt) { // not required
-		return nil
-	}
-
-	if m.ReconciledAt != nil {
-		if err := m.ReconciledAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("reconciledAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("reconciledAt")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *V1alpha1ApplicationStatus) validateResources(formats strfmt.Registry) error {
 	if swag.IsZero(m.Resources) { // not required
 		return nil
@@ -312,10 +289,6 @@ func (m *V1alpha1ApplicationStatus) ContextValidate(ctx context.Context, formats
 	}
 
 	if err := m.contextValidateOperationState(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateReconciledAt(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -417,22 +390,6 @@ func (m *V1alpha1ApplicationStatus) contextValidateOperationState(ctx context.Co
 				return ve.ValidateName("operationState")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("operationState")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1alpha1ApplicationStatus) contextValidateReconciledAt(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ReconciledAt != nil {
-		if err := m.ReconciledAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("reconciledAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("reconciledAt")
 			}
 			return err
 		}

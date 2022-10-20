@@ -37,7 +37,7 @@ type V1ObjectMeta struct {
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// creation timestamp
-	CreationTimestamp *V1Time `json:"creationTimestamp,omitempty"`
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Number of seconds allowed for this object to gracefully terminate before
 	// it will be removed from the system. Only set when deletionTimestamp is also set.
@@ -84,7 +84,7 @@ type V1ObjectMeta struct {
 	// A sequence number representing a specific generation of the desired state.
 	// Populated by the system. Read-only.
 	// +optional
-	Generation string `json:"generation,omitempty"`
+	Generation int64 `json:"generation,omitempty"`
 
 	// Map of string keys and values that can be used to organize and categorize
 	// (scope and select) objects. May match selectors of replication controllers
@@ -165,10 +165,6 @@ type V1ObjectMeta struct {
 func (m *V1ObjectMeta) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateCreationTimestamp(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateDeletionTimestamp(formats); err != nil {
 		res = append(res, err)
 	}
@@ -184,25 +180,6 @@ func (m *V1ObjectMeta) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1ObjectMeta) validateCreationTimestamp(formats strfmt.Registry) error {
-	if swag.IsZero(m.CreationTimestamp) { // not required
-		return nil
-	}
-
-	if m.CreationTimestamp != nil {
-		if err := m.CreationTimestamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("creationTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("creationTimestamp")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -281,10 +258,6 @@ func (m *V1ObjectMeta) validateOwnerReferences(formats strfmt.Registry) error {
 func (m *V1ObjectMeta) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateCreationTimestamp(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateDeletionTimestamp(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -300,22 +273,6 @@ func (m *V1ObjectMeta) ContextValidate(ctx context.Context, formats strfmt.Regis
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1ObjectMeta) contextValidateCreationTimestamp(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.CreationTimestamp != nil {
-		if err := m.CreationTimestamp.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("creationTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("creationTimestamp")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

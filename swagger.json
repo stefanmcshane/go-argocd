@@ -4912,7 +4912,7 @@
           "type": "string"
         },
         "time": {
-          "$ref": "#/definitions/v1Time"
+          "type": "string"
         }
       }
     },
@@ -4994,7 +4994,7 @@
           "type": "string"
         },
         "creationTimestamp": {
-          "$ref": "#/definitions/v1Time"
+            "type": "string"
         },
         "deletionGracePeriodSeconds": {
           "type": "string",
@@ -5016,7 +5016,7 @@
           "type": "string"
         },
         "generation": {
-          "type": "string",
+          "type": "number",
           "format": "int64",
           "title": "A sequence number representing a specific generation of the desired state.\nPopulated by the system. Read-only.\n+optional"
         },
@@ -5156,7 +5156,7 @@
         },
         "seconds": {
           "description": "Represents seconds of UTC time since Unix epoch\n1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to\n9999-12-31T23:59:59Z inclusive.",
-          "type": "string",
+          "type": "integer",
           "format": "int64"
         }
       }
@@ -5841,7 +5841,7 @@
           "$ref": "#/definitions/v1alpha1OperationState"
         },
         "reconciledAt": {
-          "$ref": "#/definitions/v1Time"
+          "type": "string"
         },
         "resourceHealthSource": {
           "type": "string",

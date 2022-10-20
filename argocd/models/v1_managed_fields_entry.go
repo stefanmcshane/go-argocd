@@ -49,7 +49,7 @@ type V1ManagedFieldsEntry struct {
 	Subresource string `json:"subresource,omitempty"`
 
 	// time
-	Time *V1Time `json:"time,omitempty"`
+	Time string `json:"time,omitempty"`
 }
 
 // Validate validates this v1 managed fields entry
@@ -57,10 +57,6 @@ func (m *V1ManagedFieldsEntry) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateFieldsV1(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTime(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -89,34 +85,11 @@ func (m *V1ManagedFieldsEntry) validateFieldsV1(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1ManagedFieldsEntry) validateTime(formats strfmt.Registry) error {
-	if swag.IsZero(m.Time) { // not required
-		return nil
-	}
-
-	if m.Time != nil {
-		if err := m.Time.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("time")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("time")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 // ContextValidate validate this v1 managed fields entry based on the context it is used
 func (m *V1ManagedFieldsEntry) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateFieldsV1(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateTime(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -134,22 +107,6 @@ func (m *V1ManagedFieldsEntry) contextValidateFieldsV1(ctx context.Context, form
 				return ve.ValidateName("fieldsV1")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("fieldsV1")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1ManagedFieldsEntry) contextValidateTime(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Time != nil {
-		if err := m.Time.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("time")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("time")
 			}
 			return err
 		}
