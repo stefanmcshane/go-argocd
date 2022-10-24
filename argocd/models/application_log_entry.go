@@ -28,7 +28,7 @@ type ApplicationLogEntry struct {
 	PodName string `json:"podName,omitempty"`
 
 	// time stamp
-	TimeStamp *V1Time `json:"timeStamp,omitempty"`
+	TimeStamp V1TimeString `json:"timeStamp,omitempty"`
 
 	// time stamp str
 	TimeStampStr string `json:"timeStampStr,omitempty"`
@@ -53,15 +53,13 @@ func (m *ApplicationLogEntry) validateTimeStamp(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.TimeStamp != nil {
-		if err := m.TimeStamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("timeStamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("timeStamp")
-			}
-			return err
+	if err := m.TimeStamp.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("timeStamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("timeStamp")
 		}
+		return err
 	}
 
 	return nil
@@ -83,15 +81,13 @@ func (m *ApplicationLogEntry) ContextValidate(ctx context.Context, formats strfm
 
 func (m *ApplicationLogEntry) contextValidateTimeStamp(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.TimeStamp != nil {
-		if err := m.TimeStamp.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("timeStamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("timeStamp")
-			}
-			return err
+	if err := m.TimeStamp.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("timeStamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("timeStamp")
 		}
+		return err
 	}
 
 	return nil

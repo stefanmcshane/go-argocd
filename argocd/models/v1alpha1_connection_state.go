@@ -19,7 +19,7 @@ import (
 type V1alpha1ConnectionState struct {
 
 	// attempted at
-	AttemptedAt *V1Time `json:"attemptedAt,omitempty"`
+	AttemptedAt V1TimeString `json:"attemptedAt,omitempty"`
 
 	// Message contains human readable information about the connection status
 	Message string `json:"message,omitempty"`
@@ -47,15 +47,13 @@ func (m *V1alpha1ConnectionState) validateAttemptedAt(formats strfmt.Registry) e
 		return nil
 	}
 
-	if m.AttemptedAt != nil {
-		if err := m.AttemptedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("attemptedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("attemptedAt")
-			}
-			return err
+	if err := m.AttemptedAt.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("attemptedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("attemptedAt")
 		}
+		return err
 	}
 
 	return nil
@@ -77,15 +75,13 @@ func (m *V1alpha1ConnectionState) ContextValidate(ctx context.Context, formats s
 
 func (m *V1alpha1ConnectionState) contextValidateAttemptedAt(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.AttemptedAt != nil {
-		if err := m.AttemptedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("attemptedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("attemptedAt")
-			}
-			return err
+	if err := m.AttemptedAt.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("attemptedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("attemptedAt")
 		}
+		return err
 	}
 
 	return nil

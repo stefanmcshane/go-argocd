@@ -19,7 +19,7 @@ import (
 type V1alpha1OperationState struct {
 
 	// finished at
-	FinishedAt *V1Time `json:"finishedAt,omitempty"`
+	FinishedAt V1TimeString `json:"finishedAt,omitempty"`
 
 	// Message holds any pertinent messages when attempting to perform operation (typically errors).
 	Message string `json:"message,omitempty"`
@@ -34,7 +34,7 @@ type V1alpha1OperationState struct {
 	RetryCount string `json:"retryCount,omitempty"`
 
 	// started at
-	StartedAt *V1Time `json:"startedAt,omitempty"`
+	StartedAt V1TimeString `json:"startedAt,omitempty"`
 
 	// sync result
 	SyncResult *V1alpha1SyncOperationResult `json:"syncResult,omitempty"`
@@ -71,15 +71,13 @@ func (m *V1alpha1OperationState) validateFinishedAt(formats strfmt.Registry) err
 		return nil
 	}
 
-	if m.FinishedAt != nil {
-		if err := m.FinishedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("finishedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("finishedAt")
-			}
-			return err
+	if err := m.FinishedAt.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("finishedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("finishedAt")
 		}
+		return err
 	}
 
 	return nil
@@ -109,15 +107,13 @@ func (m *V1alpha1OperationState) validateStartedAt(formats strfmt.Registry) erro
 		return nil
 	}
 
-	if m.StartedAt != nil {
-		if err := m.StartedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startedAt")
-			}
-			return err
+	if err := m.StartedAt.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("startedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("startedAt")
 		}
+		return err
 	}
 
 	return nil
@@ -170,15 +166,13 @@ func (m *V1alpha1OperationState) ContextValidate(ctx context.Context, formats st
 
 func (m *V1alpha1OperationState) contextValidateFinishedAt(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.FinishedAt != nil {
-		if err := m.FinishedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("finishedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("finishedAt")
-			}
-			return err
+	if err := m.FinishedAt.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("finishedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("finishedAt")
 		}
+		return err
 	}
 
 	return nil
@@ -202,15 +196,13 @@ func (m *V1alpha1OperationState) contextValidateOperation(ctx context.Context, f
 
 func (m *V1alpha1OperationState) contextValidateStartedAt(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.StartedAt != nil {
-		if err := m.StartedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startedAt")
-			}
-			return err
+	if err := m.StartedAt.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("startedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("startedAt")
 		}
+		return err
 	}
 
 	return nil

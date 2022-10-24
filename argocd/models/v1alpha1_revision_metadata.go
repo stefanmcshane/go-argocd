@@ -24,7 +24,7 @@ type V1alpha1RevisionMetadata struct {
 	Author string `json:"author,omitempty"`
 
 	// date
-	Date *V1Time `json:"date,omitempty"`
+	Date V1TimeString `json:"date,omitempty"`
 
 	// Message contains the message associated with the revision, most likely the commit message.
 	Message string `json:"message,omitempty"`
@@ -56,15 +56,13 @@ func (m *V1alpha1RevisionMetadata) validateDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.Date != nil {
-		if err := m.Date.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("date")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("date")
-			}
-			return err
+	if err := m.Date.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("date")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("date")
 		}
+		return err
 	}
 
 	return nil
@@ -86,15 +84,13 @@ func (m *V1alpha1RevisionMetadata) ContextValidate(ctx context.Context, formats 
 
 func (m *V1alpha1RevisionMetadata) contextValidateDate(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.Date != nil {
-		if err := m.Date.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("date")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("date")
-			}
-			return err
+	if err := m.Date.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("date")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("date")
 		}
+		return err
 	}
 
 	return nil

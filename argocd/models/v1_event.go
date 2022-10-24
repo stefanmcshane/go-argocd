@@ -35,13 +35,13 @@ type V1Event struct {
 	EventTime *V1MicroTime `json:"eventTime,omitempty"`
 
 	// first timestamp
-	FirstTimestamp *V1Time `json:"firstTimestamp,omitempty"`
+	FirstTimestamp V1TimeString `json:"firstTimestamp,omitempty"`
 
 	// involved object
 	InvolvedObject *V1ObjectReference `json:"involvedObject,omitempty"`
 
 	// last timestamp
-	LastTimestamp *V1Time `json:"lastTimestamp,omitempty"`
+	LastTimestamp V1TimeString `json:"lastTimestamp,omitempty"`
 
 	// A human-readable description of the status of this operation.
 	// TODO: decide on maximum length.
@@ -145,15 +145,13 @@ func (m *V1Event) validateFirstTimestamp(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.FirstTimestamp != nil {
-		if err := m.FirstTimestamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("firstTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("firstTimestamp")
-			}
-			return err
+	if err := m.FirstTimestamp.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("firstTimestamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("firstTimestamp")
 		}
+		return err
 	}
 
 	return nil
@@ -183,15 +181,13 @@ func (m *V1Event) validateLastTimestamp(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.LastTimestamp != nil {
-		if err := m.LastTimestamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("lastTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("lastTimestamp")
-			}
-			return err
+	if err := m.LastTimestamp.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("lastTimestamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("lastTimestamp")
 		}
+		return err
 	}
 
 	return nil
@@ -333,15 +329,13 @@ func (m *V1Event) contextValidateEventTime(ctx context.Context, formats strfmt.R
 
 func (m *V1Event) contextValidateFirstTimestamp(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.FirstTimestamp != nil {
-		if err := m.FirstTimestamp.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("firstTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("firstTimestamp")
-			}
-			return err
+	if err := m.FirstTimestamp.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("firstTimestamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("firstTimestamp")
 		}
+		return err
 	}
 
 	return nil
@@ -365,15 +359,13 @@ func (m *V1Event) contextValidateInvolvedObject(ctx context.Context, formats str
 
 func (m *V1Event) contextValidateLastTimestamp(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LastTimestamp != nil {
-		if err := m.LastTimestamp.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("lastTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("lastTimestamp")
-			}
-			return err
+	if err := m.LastTimestamp.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("lastTimestamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("lastTimestamp")
 		}
+		return err
 	}
 
 	return nil

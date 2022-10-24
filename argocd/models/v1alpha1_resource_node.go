@@ -21,7 +21,7 @@ import (
 type V1alpha1ResourceNode struct {
 
 	// created at
-	CreatedAt *V1Time `json:"createdAt,omitempty"`
+	CreatedAt V1TimeString `json:"createdAt,omitempty"`
 
 	// health
 	Health *V1alpha1HealthStatus `json:"health,omitempty"`
@@ -84,15 +84,13 @@ func (m *V1alpha1ResourceNode) validateCreatedAt(formats strfmt.Registry) error 
 		return nil
 	}
 
-	if m.CreatedAt != nil {
-		if err := m.CreatedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("createdAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("createdAt")
-			}
-			return err
+	if err := m.CreatedAt.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("createdAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("createdAt")
 		}
+		return err
 	}
 
 	return nil
@@ -243,15 +241,13 @@ func (m *V1alpha1ResourceNode) ContextValidate(ctx context.Context, formats strf
 
 func (m *V1alpha1ResourceNode) contextValidateCreatedAt(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.CreatedAt != nil {
-		if err := m.CreatedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("createdAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("createdAt")
-			}
-			return err
+	if err := m.CreatedAt.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("createdAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("createdAt")
 		}
+		return err
 	}
 
 	return nil

@@ -19,13 +19,13 @@ import (
 type V1alpha1RevisionHistory struct {
 
 	// deploy started at
-	DeployStartedAt *V1Time `json:"deployStartedAt,omitempty"`
+	DeployStartedAt string `json:"deployStartedAt,omitempty"`
 
 	// deployed at
-	DeployedAt *V1Time `json:"deployedAt,omitempty"`
+	DeployedAt string `json:"deployedAt,omitempty"`
 
 	// ID is an auto incrementing identifier of the RevisionHistory
-	ID string `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 
 	// Revision holds the revision the sync was performed against
 	Revision string `json:"revision,omitempty"`
@@ -38,14 +38,6 @@ type V1alpha1RevisionHistory struct {
 func (m *V1alpha1RevisionHistory) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateDeployStartedAt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDeployedAt(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateSource(formats); err != nil {
 		res = append(res, err)
 	}
@@ -53,44 +45,6 @@ func (m *V1alpha1RevisionHistory) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1alpha1RevisionHistory) validateDeployStartedAt(formats strfmt.Registry) error {
-	if swag.IsZero(m.DeployStartedAt) { // not required
-		return nil
-	}
-
-	if m.DeployStartedAt != nil {
-		if err := m.DeployStartedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deployStartedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deployStartedAt")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1alpha1RevisionHistory) validateDeployedAt(formats strfmt.Registry) error {
-	if swag.IsZero(m.DeployedAt) { // not required
-		return nil
-	}
-
-	if m.DeployedAt != nil {
-		if err := m.DeployedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deployedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deployedAt")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -117,14 +71,6 @@ func (m *V1alpha1RevisionHistory) validateSource(formats strfmt.Registry) error 
 func (m *V1alpha1RevisionHistory) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateDeployStartedAt(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateDeployedAt(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateSource(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -132,38 +78,6 @@ func (m *V1alpha1RevisionHistory) ContextValidate(ctx context.Context, formats s
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1alpha1RevisionHistory) contextValidateDeployStartedAt(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.DeployStartedAt != nil {
-		if err := m.DeployStartedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deployStartedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deployStartedAt")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1alpha1RevisionHistory) contextValidateDeployedAt(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.DeployedAt != nil {
-		if err := m.DeployedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deployedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deployedAt")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

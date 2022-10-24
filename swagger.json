@@ -3913,7 +3913,7 @@
           "type": "string"
         },
         "timeStamp": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "timeStampStr": {
           "type": "string"
@@ -4679,13 +4679,13 @@
           "$ref": "#/definitions/v1MicroTime"
         },
         "firstTimestamp": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "involvedObject": {
           "$ref": "#/definitions/v1ObjectReference"
         },
         "lastTimestamp": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "message": {
           "type": "string",
@@ -4994,7 +4994,7 @@
           "type": "string"
         },
         "creationTimestamp": {
-            "type": "string"
+          "type": "string"
         },
         "deletionGracePeriodSeconds": {
           "type": "string",
@@ -5002,7 +5002,7 @@
           "title": "Number of seconds allowed for this object to gracefully terminate before\nit will be removed from the system. Only set when deletionTimestamp is also set.\nMay only be shortened.\nRead-only.\n+optional"
         },
         "deletionTimestamp": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "finalizers": {
           "type": "array",
@@ -5160,6 +5160,10 @@
           "format": "int64"
         }
       }
+    },
+    "v1TimeString": {
+      "description": "v1TimeString is a string representation of v1Time, to fix compilation errors",
+      "type": "string"
     },
     "v1alpha1AWSAuthConfig": {
       "type": "object",
@@ -5328,7 +5332,7 @@
       "title": "ApplicationCondition contains details about an application condition, which is usally an error or warning",
       "properties": {
         "lastTransitionTime": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "message": {
           "type": "string",
@@ -5393,7 +5397,7 @@
       "title": "ApplicationSetCondition contains details about an applicationset condition, which is usally an error or warning",
       "properties": {
         "lastTransitionTime": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "message": {
           "type": "string",
@@ -5835,7 +5839,7 @@
           }
         },
         "observedAt": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "operationState": {
           "$ref": "#/definitions/v1alpha1OperationState"
@@ -6004,7 +6008,7 @@
           "title": "Reference between project and cluster that allow you automatically to be added as item inside Destinations project entity"
         },
         "refreshRequestedAt": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "server": {
           "type": "string",
@@ -6031,7 +6035,7 @@
           "title": "APIsCount holds number of observed Kubernetes API count"
         },
         "lastCacheSyncTime": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "resourcesCount": {
           "type": "string",
@@ -6181,7 +6185,7 @@
       "title": "ConnectionState contains information about remote resource connection state, currently used for clusters and repositories",
       "properties": {
         "attemptedAt": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "message": {
           "type": "string",
@@ -6621,7 +6625,7 @@
       "title": "OperationState contains information about state of a running operation",
       "properties": {
         "finishedAt": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "message": {
           "description": "Message holds any pertinent messages when attempting to perform operation (typically errors).",
@@ -6640,7 +6644,7 @@
           "title": "RetryCount contains time of operation retries"
         },
         "startedAt": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "syncResult": {
           "$ref": "#/definitions/v1alpha1SyncOperationResult"
@@ -7267,7 +7271,7 @@
       "title": "ResourceNode contains information about live resource and its children\nTODO: describe members of this type",
       "properties": {
         "createdAt": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "health": {
           "$ref": "#/definitions/v1alpha1HealthStatus"
@@ -7441,7 +7445,7 @@
         },
         "limit": {
           "description": "Limit is the maximum number of attempts for retrying a failed sync. If set to 0, no retries will be performed.",
-          "type": "string",
+          "type": "number",
           "format": "int64"
         }
       }
@@ -7451,13 +7455,13 @@
       "title": "RevisionHistory contains history information about a previous sync",
       "properties": {
         "deployStartedAt": {
-          "$ref": "#/definitions/v1Time"
+          "type": "string"
         },
         "deployedAt": {
-          "$ref": "#/definitions/v1Time"
+          "type": "string"
         },
         "id": {
-          "type": "string",
+          "type": "integer",
           "format": "int64",
           "title": "ID is an auto incrementing identifier of the RevisionHistory"
         },
@@ -7479,7 +7483,7 @@
           "title": "who authored this revision,\ntypically their name and email, e.g. \"John Doe <john_doe@my-company.com>\",\nbut might not match this example"
         },
         "date": {
-          "$ref": "#/definitions/v1Time"
+          "$ref": "#/definitions/v1TimeString"
         },
         "message": {
           "description": "Message contains the message associated with the revision, most likely the commit message.",

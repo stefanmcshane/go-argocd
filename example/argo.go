@@ -29,6 +29,7 @@ func run() error {
 
 func NewArgoCD() (string, error) {
 	var cli string
+	ctx := context.Background()
 
 	argoConf := argocd.ArgoCDClientOpts{
 		Host:      "localhost",
@@ -38,7 +39,7 @@ func NewArgoCD() (string, error) {
 		Debug:     false,
 	}
 
-	argoClient, err := argocd.NewArgoCDWithAPIKey(argoConf)
+	argoClient, err := argocd.NewArgoCD(ctx, argoConf)
 	if err != nil {
 		return cli, err
 	}

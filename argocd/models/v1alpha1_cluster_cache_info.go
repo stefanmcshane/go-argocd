@@ -22,7 +22,7 @@ type V1alpha1ClusterCacheInfo struct {
 	ApisCount string `json:"apisCount,omitempty"`
 
 	// last cache sync time
-	LastCacheSyncTime *V1Time `json:"lastCacheSyncTime,omitempty"`
+	LastCacheSyncTime V1TimeString `json:"lastCacheSyncTime,omitempty"`
 
 	// ResourcesCount holds number of observed Kubernetes resources
 	ResourcesCount string `json:"resourcesCount,omitempty"`
@@ -47,15 +47,13 @@ func (m *V1alpha1ClusterCacheInfo) validateLastCacheSyncTime(formats strfmt.Regi
 		return nil
 	}
 
-	if m.LastCacheSyncTime != nil {
-		if err := m.LastCacheSyncTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("lastCacheSyncTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("lastCacheSyncTime")
-			}
-			return err
+	if err := m.LastCacheSyncTime.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("lastCacheSyncTime")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("lastCacheSyncTime")
 		}
+		return err
 	}
 
 	return nil
@@ -77,15 +75,13 @@ func (m *V1alpha1ClusterCacheInfo) ContextValidate(ctx context.Context, formats 
 
 func (m *V1alpha1ClusterCacheInfo) contextValidateLastCacheSyncTime(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LastCacheSyncTime != nil {
-		if err := m.LastCacheSyncTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("lastCacheSyncTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("lastCacheSyncTime")
-			}
-			return err
+	if err := m.LastCacheSyncTime.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("lastCacheSyncTime")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("lastCacheSyncTime")
 		}
+		return err
 	}
 
 	return nil

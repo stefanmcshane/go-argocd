@@ -47,7 +47,7 @@ type V1ObjectMeta struct {
 	DeletionGracePeriodSeconds string `json:"deletionGracePeriodSeconds,omitempty"`
 
 	// deletion timestamp
-	DeletionTimestamp *V1Time `json:"deletionTimestamp,omitempty"`
+	DeletionTimestamp V1TimeString `json:"deletionTimestamp,omitempty"`
 
 	// Must be empty before the object is deleted from the registry. Each entry
 	// is an identifier for the responsible component that will remove the entry
@@ -188,15 +188,13 @@ func (m *V1ObjectMeta) validateDeletionTimestamp(formats strfmt.Registry) error 
 		return nil
 	}
 
-	if m.DeletionTimestamp != nil {
-		if err := m.DeletionTimestamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deletionTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deletionTimestamp")
-			}
-			return err
+	if err := m.DeletionTimestamp.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("deletionTimestamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("deletionTimestamp")
 		}
+		return err
 	}
 
 	return nil
@@ -278,15 +276,13 @@ func (m *V1ObjectMeta) ContextValidate(ctx context.Context, formats strfmt.Regis
 
 func (m *V1ObjectMeta) contextValidateDeletionTimestamp(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.DeletionTimestamp != nil {
-		if err := m.DeletionTimestamp.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deletionTimestamp")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deletionTimestamp")
-			}
-			return err
+	if err := m.DeletionTimestamp.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("deletionTimestamp")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("deletionTimestamp")
 		}
+		return err
 	}
 
 	return nil

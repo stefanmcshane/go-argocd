@@ -29,7 +29,7 @@ type V1alpha1ApplicationStatus struct {
 	History []*V1alpha1RevisionHistory `json:"history"`
 
 	// observed at
-	ObservedAt *V1Time `json:"observedAt,omitempty"`
+	ObservedAt V1TimeString `json:"observedAt,omitempty"`
 
 	// operation state
 	OperationState *V1alpha1OperationState `json:"operationState,omitempty"`
@@ -171,15 +171,13 @@ func (m *V1alpha1ApplicationStatus) validateObservedAt(formats strfmt.Registry) 
 		return nil
 	}
 
-	if m.ObservedAt != nil {
-		if err := m.ObservedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("observedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("observedAt")
-			}
-			return err
+	if err := m.ObservedAt.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("observedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("observedAt")
 		}
+		return err
 	}
 
 	return nil
@@ -368,15 +366,13 @@ func (m *V1alpha1ApplicationStatus) contextValidateHistory(ctx context.Context, 
 
 func (m *V1alpha1ApplicationStatus) contextValidateObservedAt(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ObservedAt != nil {
-		if err := m.ObservedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("observedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("observedAt")
-			}
-			return err
+	if err := m.ObservedAt.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("observedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("observedAt")
 		}
+		return err
 	}
 
 	return nil

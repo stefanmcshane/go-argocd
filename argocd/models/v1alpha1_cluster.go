@@ -46,7 +46,7 @@ type V1alpha1Cluster struct {
 	Project string `json:"project,omitempty"`
 
 	// refresh requested at
-	RefreshRequestedAt *V1Time `json:"refreshRequestedAt,omitempty"`
+	RefreshRequestedAt V1TimeString `json:"refreshRequestedAt,omitempty"`
 
 	// Server is the API server URL of the Kubernetes cluster
 	Server string `json:"server,omitempty"`
@@ -147,15 +147,13 @@ func (m *V1alpha1Cluster) validateRefreshRequestedAt(formats strfmt.Registry) er
 		return nil
 	}
 
-	if m.RefreshRequestedAt != nil {
-		if err := m.RefreshRequestedAt.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("refreshRequestedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("refreshRequestedAt")
-			}
-			return err
+	if err := m.RefreshRequestedAt.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("refreshRequestedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("refreshRequestedAt")
 		}
+		return err
 	}
 
 	return nil
@@ -237,15 +235,13 @@ func (m *V1alpha1Cluster) contextValidateInfo(ctx context.Context, formats strfm
 
 func (m *V1alpha1Cluster) contextValidateRefreshRequestedAt(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.RefreshRequestedAt != nil {
-		if err := m.RefreshRequestedAt.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("refreshRequestedAt")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("refreshRequestedAt")
-			}
-			return err
+	if err := m.RefreshRequestedAt.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("refreshRequestedAt")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("refreshRequestedAt")
 		}
+		return err
 	}
 
 	return nil

@@ -19,7 +19,7 @@ import (
 type V1alpha1ApplicationSetCondition struct {
 
 	// last transition time
-	LastTransitionTime *V1Time `json:"lastTransitionTime,omitempty"`
+	LastTransitionTime V1TimeString `json:"lastTransitionTime,omitempty"`
 
 	// Message contains human-readable message indicating details about condition
 	Message string `json:"message,omitempty"`
@@ -53,15 +53,13 @@ func (m *V1alpha1ApplicationSetCondition) validateLastTransitionTime(formats str
 		return nil
 	}
 
-	if m.LastTransitionTime != nil {
-		if err := m.LastTransitionTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("lastTransitionTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("lastTransitionTime")
-			}
-			return err
+	if err := m.LastTransitionTime.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("lastTransitionTime")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("lastTransitionTime")
 		}
+		return err
 	}
 
 	return nil
@@ -83,15 +81,13 @@ func (m *V1alpha1ApplicationSetCondition) ContextValidate(ctx context.Context, f
 
 func (m *V1alpha1ApplicationSetCondition) contextValidateLastTransitionTime(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LastTransitionTime != nil {
-		if err := m.LastTransitionTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("lastTransitionTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("lastTransitionTime")
-			}
-			return err
+	if err := m.LastTransitionTime.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("lastTransitionTime")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("lastTransitionTime")
 		}
+		return err
 	}
 
 	return nil
